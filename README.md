@@ -2,10 +2,10 @@
  In this project, we have created the ERC20 Degen Token for Degen Gaming.
 
  ## Description
- 1. Players can check their balance anytime.<br>
- 2. Players can reedem token for in-game rewards.<br>
- 3. Players can transfer tokens to other players in game.<br>
- 4. Owner can mint tokens to give them to players as rewards.<br>
+ 1. Players can check their balance anytime.
+ 2. Players can reedem token for in-game rewards.
+ 3. Players can transfer tokens to other players in game.
+ 4. Owner can mint tokens to give them to players as rewards.
 
  ## How to use
  1. Clone the repository
