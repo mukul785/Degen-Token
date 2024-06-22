@@ -8,6 +8,8 @@ contract DegenToken {
     uint public TotalSupply = 5000 * (10 ** Decimals);
     address public Owner;
 
+    string public Rewards = "Revive Potion (1 DGN), Totem of Wrath (50 DGN), Book of Power(80 DGN)";
+
     mapping(address => uint256) public balance;
 
     event Mint(address indexed to, uint256 value);
