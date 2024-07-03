@@ -11,6 +11,7 @@ contract DegenToken {
     string public Rewards = "Revive Potion (1 DGN), Totem of Wrath (50 DGN), Book of Power(80 DGN)";
 
     mapping(address => uint256) public balance;
+    mapping(address => string[]) public redeemedItems;
 
     event Mint(address indexed to, uint256 value);
     event Burn(address indexed from, uint256 value);
@@ -62,6 +63,8 @@ contract DegenToken {
 
         balance[msg.sender] -= cost;
         TotalSupply -= cost;
+        redeemedItems[msg.sender].push(reward);
+
         emit Redeem(msg.sender, cost, reward);
         emit Transfer(msg.sender, address(0), cost);
     }
@@ -72,5 +75,9 @@ contract DegenToken {
         balance[msg.sender] -= _value;
         emit Burn(msg.sender, _value);
         emit Transfer(msg.sender, address(0), _value);
+    }
+
+    function getRedeemedItems(address _user) public view returns (string[] memory) {
+        return redeemedItems[_user];
     }
 }
