@@ -1,82 +1,66 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.20;
 
-contract DegenToken {
-    string public Name = "Degen";
-    string public Symbol = "DGN";
-    uint public Decimals = 0;
-    uint public TotalSupply = 5000 * (10 ** Decimals);
-    address public Owner;
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-    string public Rewards = "Revive Potion (1 DGN), Totem of Wrath (50 DGN), Book of Power(80 DGN)";
+contract DegenToken is ERC20 {
+    address public owner;
 
-    mapping(address => uint256) public balance;
-    mapping(address => string[]) public redeemedItems;
+    string public constant REWARDS = "Revive Potion (1 DGN), Totem of Wrath (50 DGN), Book of Power (80 DGN)";
 
-    event Mint(address indexed to, uint256 value);
-    event Burn(address indexed from, uint256 value);
-    event Transfer(address indexed from, address indexed to, uint256 value);
+    mapping(address => string[]) private redeemedItems; // mapping between address to redeemed items
+    mapping(address => uint) private redeemedItems_atAddress; // mapping between address and the items redeemed
+
     event Redeem(address indexed from, uint256 value, string reward);
 
+    constructor() ERC20("Degen", "DGN") {
+        _mint(msg.sender, 0);
+        owner = msg.sender;
+    }
+
     modifier onlyOwner() {
-        require(msg.sender == Owner, "This operation is restricted to OWNER only");
+        require(msg.sender == owner, "This operation is restricted to the owner only");
         _;
     }
 
-    constructor() {
-        Owner = msg.sender;
-        balance[Owner] = 0;
-    }
-
+    // Mint Function for minting tokens 
     function mint(address _to, uint256 _value) public onlyOwner {
-        TotalSupply += _value;
-        balance[_to] += _value;
-        emit Mint(_to, _value);
-        emit Transfer(address(0), _to, _value);
+        _mint(_to, _value);
     }
 
-    function transfer(address _to, uint256 _value) public {
-        require(balance[msg.sender] >= _value, "Insufficient balance");
-        balance[msg.sender] -= _value;
-        balance[_to] += _value;
-        emit Transfer(msg.sender, _to, _value);
-    }
-
-    function redeem(uint8 _rewardIndex) public {
-        uint256 cost;
+    // Redeem Function for redeeming rewards  
+    function redeem(uint8 _rewardIndex) public returns (uint) {
+        uint cost;
         string memory reward;
 
         if (_rewardIndex == 1) {
-            cost = 1 * (10 ** Decimals); // 0.01
+            cost = 1;
             reward = "Revive Potion";
-        } else if (_rewardIndex == 2) {
-            cost = 50 * (10 ** Decimals); // 0.5
+        } 
+        else if (_rewardIndex == 2) {
+            cost = 50;
             reward = "Totem of Wrath";
-        } else if (_rewardIndex == 3) {
-            cost = 80 * (10 ** Decimals); // 0.8
+        } 
+        else if (_rewardIndex == 3) {
+            cost = 80;
             reward = "Book of Power";
-        } else {
+        } 
+        else {
             revert("Invalid reward index");
         }
 
-        require(balance[msg.sender] >= cost, "Insufficient balance");
+        require(balanceOf(msg.sender) >= cost, "Insufficient balance");
 
-        balance[msg.sender] -= cost;
-        TotalSupply -= cost;
+        _burn(msg.sender, cost);
         redeemedItems[msg.sender].push(reward);
+        redeemedItems_atAddress[msg.sender] += 1;
 
         emit Redeem(msg.sender, cost, reward);
-        emit Transfer(msg.sender, address(0), cost);
+        return redeemedItems_atAddress[msg.sender];
     }
 
-    function burn(uint256 _value) public {
-        require(balance[msg.sender] >= _value, "Insufficient balance");
-        TotalSupply -= _value;
-        balance[msg.sender] -= _value;
-        emit Burn(msg.sender, _value);
-        emit Transfer(msg.sender, address(0), _value);
-    }
-
+    // getRedeemed Function for showcasing rewards available at address 
     function getRedeemedItems(address _user) public view returns (string[] memory) {
         return redeemedItems[_user];
     }
