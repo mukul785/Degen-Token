@@ -2,17 +2,18 @@
  In this project, we have created the ERC20 Degen Token for Degen Gaming.
 
  ## Description
-Minting new tokens: The platform should be able to create new tokens and distribute them to players as rewards. Only the owner can mint tokens.
-Transferring tokens: Players should be able to transfer their tokens to others.
-Redeeming tokens: Players should be able to redeem their tokens for items in the in-game store.
-Checking token balance: Players should be able to check their token balance at any time.
-Burning tokens: Anyone should be able to burn tokens, that they own, that are no longer needed.
-Getting Started
-For the execution of our code we will be using remixIDE , `https://remix.ethereum.org/#lang=en&optimize=false&runs=200&evmVersion=null&version=soljson-v0.8.25+commit.b61c2a91.js`, Snowtrace testnet.io : `https://testnet.snowtrace.io/` , and VS-Code for Deployment.
+Minting new tokens: The platform should be able to create new tokens and distribute them to players as rewards. Only the owner can mint tokens.<br>
+Transferring tokens: Players should be able to transfer their tokens to others.<br>
+Redeeming tokens: Players should be able to redeem their tokens for items in the in-game store.<br>
+Checking token balance: Players should be able to check their token balance at any time.<br>
+Burning tokens: Anyone should be able to burn tokens, that they own, that are no longer needed.<br>
 
-After opening the remix IDE create a new .sol file and start writing the project code.
+## Getting Started
+For the execution of our code we will be using remixIDE , `https://remix.ethereum.org/#lang=en&optimize=false&runs=200&evmVersion=null&version=soljson-v0.8.25+commit.b61c2a91.js`, Snowtrace testnet.io : `https://testnet.snowtrace.io/` , and VS-Code for Deployment.<br>
 
-Executing program
+After opening the remix IDE create a new .sol file and start writing the project code.<br>
+
+Executing program<br>
 ```
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
@@ -83,11 +84,11 @@ contract DegenToken is ERC20 {
 }
 ```
 
-Set Environment in remixIDE to Injected Provider Metamask,
+Set Environment in remixIDE to Injected Provider Metamask,<br>
 
-After writing the code and setting up environment it's time to compile it. So, press Ctrl + S to compile your code or click on Solidity comipler and then click on Compile project.sol . Now it's time to deploy click on deploy and run transction just below Solidity compiler and deploy . After deployment we can test mint and burn function to check if the code is working properly.
+After writing the code and setting up environment it's time to compile it. So, press Ctrl + S to compile your code or click on Solidity comipler and then click on Compile project.sol . Now it's time to deploy click on deploy and run transction just below Solidity compiler and deploy . After deployment we can test mint and burn function to check if the code is working properly.<br>
 
-Also put deployed Address in testnet snowtrace.io and transactions will be reflected.
+Also put deployed Address in testnet snowtrace.io and transactions will be reflected.<br>
 
-For Better Understanding you can refer to Video Explaination.
-I hope you Understand the program Code and functioning well.
+For Better Understanding you can refer to Video Explaination.<br>
+I hope you Understand the program Code and functioning well.<br>
