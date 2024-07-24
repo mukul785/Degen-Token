@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -29,6 +29,17 @@ contract DegenToken is ERC20 {
         _mint(_to, _value);
     }
 
+    // Burn Function to burn unwanted Tokens
+    function burn(uint256 _value) public {
+        _burn(msg.sender, _value);
+    }
+
+    // Transfer Function to transfer tokens
+    function transfer(address recipient, uint256 amount) public override returns (bool) {
+        _transfer(_msgSender(), recipient, amount);
+        return true;
+    }
+
     // Redeem Function for redeeming rewards  
     function redeem(uint8 _rewardIndex) public returns (uint) {
         uint cost;
@@ -52,7 +63,8 @@ contract DegenToken is ERC20 {
 
         require(balanceOf(msg.sender) >= cost, "Insufficient balance");
 
-        _burn(msg.sender, cost);
+        //Burn function calling
+        burn(cost);
         redeemedItems[msg.sender].push(reward);
         redeemedItems_atAddress[msg.sender] += 1;
 
